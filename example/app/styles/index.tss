@@ -1,0 +1,25 @@
+".container": { backgroundColor:"#000", layout: 'vertical' }
+	
+	".header": { width: 320, height: 40, top: 50 }
+		"#lMonth": { color: '#fff', font: { fontSize: 30 } }
+		".button": { width: 50, height: 40, backgroundColor: 'transparent', color: '#fff', font: { fontSize: 22 } }
+		".button-prev": { left: 0 }
+		".button-next": { right: 0 }
+			
+	".calendar-week": { width: 45, height: 32, left: 0.5 }
+		".calendar-week-label": { color: '#999', font: { fontSize: 10, fontFamily: 'HelveticaNeue-Light' } }
+	".calendar-date": { width: 45, height: 33, top: 1, left: 0.5, backgroundColor: '#fff' }
+		".calendar-date-label": { color: '#000', font: { fontSize: 13, fontFamily: 'HelveticaNeue-Light' }, touchEnabled: false }
+	".calendar-today": {  }
+		".calendar-today-label": { color: 'red' }
+	".calendar-disabled": {  }
+		".calendar-disabled-label": { color: '#ccc' }
+	
+		".calendar-events": { width: Ti.UI.SIZE, height: 5, top: 75.5, layout: 'horizontal', touchEnabled: false }
+			".calendar-event": { width: 5, height: 5, left: 1.5, right: 1.5, touchEnabled: false }
+			".calendar-event-yellow": { backgroundColor: '#e8db07' }
+			".calendar-event-blue":   { backgroundColor: '#005ab4' }
+			".calendar-event-red":    { backgroundColor: '#ac1e1f' }	
+			
+	".advanced": { top: 200, layout: 'vertical' }
+		".button-advanced": { width: 150, height: 30, top: 5, backgroundColor: 'transparent', color: '#fff', font: { fontSize: 12 }, borderColor: '#fff', borderRadius: 5 }

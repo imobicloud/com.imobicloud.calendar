@@ -1,0 +1,19 @@
+<Alloy>
+	<Window class="container">
+		
+		<View class="header">
+			<Label id="lMonth" />
+			<Button id="btnPrev" class="button button-prev" onClick="prevMonth" />
+			<Button id="btnNext" class="button button-next" onClick="nextMonth" />
+		</View>
+		
+		<Widget id="vCalendar" src="com.imobicloud.calendar" swipeable="true" onChange="calendarChange" />
+		
+		<View class="advanced">
+			<Button class="button-advanced" onClick="getDate">Get month</Button>
+			<Button class="button-advanced" onClick="setDate">Set month to Feb 1986</Button>
+			<Button class="button-advanced" onClick="customStyle">Custom Style</Button>
+		</View>
+		
+	</Window>
+</Alloy>

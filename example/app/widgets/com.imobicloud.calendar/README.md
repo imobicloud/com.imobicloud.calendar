@@ -51,7 +51,7 @@ function calendarChange(e) {
     //      'month': the user has changed the current month
     //      'selected': the user has selected a day in the calendar
     
-    // e.date: moment object of the selected day (first day of month when month changed)
+    // e.date: moment object with the selected day (first day of month when month changed)
 
     // e.view: view of the date to be able to add/change values. Only available when e.type = 'selected'
     Ti.API.info('type: ' + e.type + ' - date: ' + e.date.format("DD-MM-YYYY"));
