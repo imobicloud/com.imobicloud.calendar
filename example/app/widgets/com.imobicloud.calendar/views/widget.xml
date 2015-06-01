@@ -1,3 +1,0 @@
-<Alloy>
-	<View id="vCalendar" class="imc-calendar" onClick="calendarClicked"/>
-</Alloy>
