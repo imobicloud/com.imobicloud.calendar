@@ -1,6 +1,6 @@
-// TODO: require moment 2.8.4, current 2.7.0 [https://github.com/appcelerator/alloy/blob/master/Alloy/builtins/moment.js]
-var moment = require('moment'), // require('alloy/moment'),
-	firstDayOfWeek; // 0: Sunday is the first day of the week. 1: Monday is the first day of the week.
+var moment = require('alloy/moment'),
+	firstDayOfWeek, // 0: Sunday is the first day of the week. 1: Monday is the first day of the week.
+	todayId = moment().startOf('day').format(); // get today's iso string without hours, minutes and seconds
 
 init(arguments[0]);
 
@@ -40,7 +40,7 @@ function loadDate(time, formatter) {
 	var column      = 0,
 		thisMonth   = time.month(),
   		currentDate = time.subtract(firstDayOfWeek === 0 ? time.day() : ( time.day() || 7 ) - 1, 'days'),
-  		todayId     = moment().startOf('day').format(); // get today's iso string without hours, minutes and seconds
+  		cancelNextMonth = false;
   	
   	var container = $.UI.create('View', { classes: 'imc-calendar-dates' });
   	
@@ -53,8 +53,12 @@ function loadDate(time, formatter) {
   			if (dateId == todayId) {
   				isToday = true;
   			}
+  			cancelNextMonth = true;
   		} else  {
   			isThisMonth = false;
+  			if (cancelNextMonth && column === 0) {
+  				break;
+  			}
   		}
   		
         // Set some custom properties

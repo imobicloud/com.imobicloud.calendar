@@ -1,5 +1,4 @@
-// TODO: require moment 2.8.4, current 2.7.0 [https://github.com/appcelerator/alloy/blob/master/Alloy/builtins/moment.js]
-var moment = require('moment'), // require('alloy/moment'),
+var moment = require('alloy/moment'),
 	dateFormatter, 
 	weekFormatter,
 	oDate;
@@ -31,6 +30,10 @@ exports.init = function(params) {
 	if (params == null) { params = {}; }
 	dateFormatter = params.dateFormatter;
 	weekFormatter = params.weekFormatter;
+	
+	if (params.date == null) {
+		params.date = new Date();
+	}
 	set(params.date);
 };
 
