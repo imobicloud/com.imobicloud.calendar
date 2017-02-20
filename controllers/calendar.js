@@ -13,25 +13,33 @@ init(arguments[0]);
  * */
 function init(args) {
 	firstDayOfWeek = moment.localeData().firstDayOfWeek();
-	
+
 	loadWeek(args.weekFormatter || weekFormatter);
 	loadDate(args.date, args.dateFormatter || dateFormatter);
 };
+
+// TODO: fix: Click event is not fired
+function viewReady() {
+	this.removeEventListener('postlayout', viewReady);
+}
 
 // Creates the week of day row. Will use the default weekFormatter if you don't pass your own function
 function loadWeek(formatter) {
   	var dow = firstDayOfWeek,
   		weekNames = moment.weekdaysShort(),
   		container = $.UI.create('View', { classes: 'imc-calendar-weeks' });
-  	
+
   	for (var i = 0; i < 7; i++) {
-		container.add(formatter({
+		var weekView = formatter({
   			column: i,
   			weekText: weekNames[ dow < 7 ? dow : 0 ]
-  		}));
+  		});
+		// TODO: fix: Click event is not fired
+		weekView.addEventListener('postlayout', viewReady);
+		container.add(weekView);
   		dow++;
 	};
-	
+
 	$.calendar.add(container);
 }
 
@@ -41,14 +49,14 @@ function loadDate(time, formatter) {
 		thisMonth   = time.month(),
   		currentDate = time.subtract(firstDayOfWeek === 0 ? time.day() : ( time.day() || 7 ) - 1, 'days'),
   		cancelNextMonth = false;
-  	
+
   	var container = $.UI.create('View', { classes: 'imc-calendar-dates' });
-  	
+
   	for (var i = 0; i < 42; i++) {
   		var dateId = currentDate.format(),
   			isThisMonth = true,
   			isToday = false;
-  		
+
   		if (currentDate.month() == thisMonth) {
   			if (dateId == todayId) {
   				isToday = true;
@@ -60,22 +68,24 @@ function loadDate(time, formatter) {
   				break;
   			}
   		}
-  		
-        // Set some custom properties
-		container.add(formatter({
+
+		var dateView = formatter({
 			index: i,
 			column: column,
 			dateId: dateId,
 			dateText: currentDate.date(),
 			isThisMonth: isThisMonth,
  			isToday: isToday
-		}));
-		
+		});
+		// TODO: fix: Click event is not fired
+        dateView.addEventListener('postlayout', viewReady);
+		container.add(dateView);
+
 		currentDate.add(1, 'days');
-		
+
 		if (column < 6) { column++; } else { column = 0; }
 	};
-	
+
 	$.calendar.add(container);
 }
 
@@ -83,7 +93,7 @@ function loadDate(time, formatter) {
  params = {
     column: 0, // from 0 to 6
    	weekText: "Sun"
- } 
+ }
  * */
 // Standard weekFormatter includes a view for wrapper and a label for text
 function weekFormatter(params) {
@@ -100,7 +110,7 @@ function weekFormatter(params) {
  	dateText: 31,
  	isThisMonth: true,
  	isToday: false
- } 
+ }
  * */
 // Standard dateFormatter includes a view for wrapper and a label for text
 // You can differentiate between: days in current month, the current day (today class)
@@ -108,7 +118,7 @@ function weekFormatter(params) {
 function dateFormatter(params) {
   	var  viewClasses = ['imc-calendar-date'],
 		labelClasses = ['imc-calendar-date-label'];
-	
+
 	if (params.isThisMonth) {
 		if (params.isToday) {
 			 viewClasses.push('imc-calendar-today');
@@ -118,12 +128,12 @@ function dateFormatter(params) {
 		 viewClasses.push('imc-calendar-disabled');
 		labelClasses.push('imc-calendar-disabled-label');
 	}
-	
+
 	 viewClasses.push('imc-calendar-date-' + params.column);
 	labelClasses.push('imc-calendar-date-label-' + params.column);
-	
+
 	var vDate = $.UI.create('View', { date: params.dateId,   classes:  viewClasses.join(' ') });
     vDate.add( $.UI.create('Label', { text: params.dateText, classes: labelClasses.join(' ') }) );
-		
+
 	return vDate;
 }
