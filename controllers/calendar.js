@@ -34,11 +34,12 @@ function loadWeek(formatter) {
   			column: i,
   			weekText: weekNames[ dow < 7 ? dow : 0 ]
   		});
-		// TODO: fix: Click event is not fired
-		weekView.addEventListener('postlayout', viewReady);
 		container.add(weekView);
   		dow++;
 	};
+
+	// TODO: fix: Click event is not fired
+	container.addEventListener('postlayout', viewReady);
 
 	$.calendar.add(container);
 }
@@ -77,14 +78,15 @@ function loadDate(time, formatter) {
 			isThisMonth: isThisMonth,
  			isToday: isToday
 		});
-		// TODO: fix: Click event is not fired
-        dateView.addEventListener('postlayout', viewReady);
 		container.add(dateView);
 
 		currentDate.add(1, 'days');
 
 		if (column < 6) { column++; } else { column = 0; }
 	};
+
+	// TODO: fix: Click event is not fired
+	container.addEventListener('postlayout', viewReady);
 
 	$.calendar.add(container);
 }
